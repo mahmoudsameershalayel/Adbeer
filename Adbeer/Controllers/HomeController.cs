@@ -1,4 +1,5 @@
-﻿using Adbeer.Models;
+﻿using Adbeer.Data;
+using Adbeer.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,6 +7,11 @@ namespace Adbeer.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext _context;
+        public HomeController(ApplicationDbContext context)
+        {
+                _context = context;
+        }
         [HttpGet]
         public IActionResult Index()
         {

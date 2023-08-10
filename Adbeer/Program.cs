@@ -11,7 +11,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredUniqueChars = 1;
@@ -31,6 +31,9 @@ builder.Services.ConfigureApplicationCookie(Options =>
     Options.AccessDeniedPath = "/Denied";
 }
 );
+ 
+
+
 
 
 var app = builder.Build();
