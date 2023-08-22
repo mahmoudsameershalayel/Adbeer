@@ -23,6 +23,8 @@ namespace Adbeer.Controllers
         {
             return View();
         }
+
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginDto dto)
         {
@@ -41,11 +43,22 @@ namespace Adbeer.Controllers
             }
             return View();
         }
+
+        
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return LocalRedirect("/Home");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> SignUp()
+        {
+            return View();
+
+        }
+
+
     }
 }
