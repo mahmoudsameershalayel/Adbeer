@@ -1,5 +1,5 @@
 ﻿using Adbeer.Areas.Admin.Dto.DriverDto;
-using Adbeer.Areas.ViewModel;
+using Adbeer.Areas.Admin.ViewModel;
 using Adbeer.Models;
 using AutoMapper;
 

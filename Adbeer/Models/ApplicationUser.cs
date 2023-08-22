@@ -18,6 +18,7 @@ namespace Adbeer.Models
         public DateTime Updated_at { get; set; } = DateTime.Now;
         public string? Updated_by { get; set; }
         public bool IsDeleted { get; set; } = false;
+        public string ImageName { get; set; }
         public List<BusStudents> _BusStudents { get; set; }
     }
 }

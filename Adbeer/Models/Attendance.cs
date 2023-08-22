@@ -2,7 +2,7 @@
 
 namespace Adbeer.Models
 {
-    public class Attendance
+    public class Attendance : BaseEntity
     {
         public int Id { get; set; }
         public string From { get; set; }

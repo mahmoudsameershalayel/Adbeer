@@ -1,6 +1,6 @@
 ﻿namespace Adbeer.Models
 {
-    public class Bus
+    public class Bus : BaseEntity
     {
         public int Id { get; set; }
         public int Capacity { get; set; }

@@ -44,7 +44,8 @@ namespace Adbeer.Data
                 Email = "Administrator@admin.com",
                 NormalizedEmail = "ADMINISTRATOR@ADMIN.COM",
                 UserName = "System_Administrator",
-                Phone = "97259000000"
+                Phone = "97259000000",
+                ImageName = ""
             };
 
             //Password Hasher
