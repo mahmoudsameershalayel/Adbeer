@@ -1,6 +1,6 @@
 ﻿namespace Adbeer.Models
 {
-    public class School
+    public class School : BaseEntity
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

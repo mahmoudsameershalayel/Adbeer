@@ -1,5 +1,7 @@
+using Adbeer.AutoMapper;
 using Adbeer.Data;
 using Adbeer.Models;
+using Adbeer.Service.DriverService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,9 +35,10 @@ builder.Services.ConfigureApplicationCookie(Options =>
     Options.AccessDeniedPath = "/Denied";
 }
 );
- 
 
 
+builder.Services.AddAutoMapper(typeof(ApplicationProfile).Assembly);
+builder.Services.AddScoped<IDriverService , DriverService>();
 
 
 var app = builder.Build();
