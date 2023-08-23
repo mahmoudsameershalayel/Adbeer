@@ -10,14 +10,13 @@ namespace Adbeer.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+
         }
         protected override void OnModelCreating(ModelBuilder Builder)
         {
             
-
             //Applay constrains
             Builder.ApplyConfiguration(new BusStudentsConstrains());
 
