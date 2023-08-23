@@ -11,7 +11,7 @@ namespace Adbeer.Service.DriverService
         public Task<CreateDriverDto> GetById(string id);
         public Task<ApplicationUser> GetUserById(string id);
         public Task<UpdateDriverDto> GetByIdForEdit(string id);
-        public Task<CreateDriverDto> Create(CreateDriverDto dto);
+        public Task<int> Create(CreateDriverDto dto);
         public Task<UpdateDriverDto> Update(UpdateDriverDto dto);
         public Task<int> Delete(string id);
     }

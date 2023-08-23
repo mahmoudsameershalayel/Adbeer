@@ -35,7 +35,7 @@ namespace Adbeer.Controllers
                     bool isAdmin = await _userManager.IsInRoleAsync(_user, "Administrator");
                     if (isAdmin)
                     {
-                        return LocalRedirect("/Admin/Home");
+                        return LocalRedirect("/Admin/Home/Index");
                     }
                 }
             }

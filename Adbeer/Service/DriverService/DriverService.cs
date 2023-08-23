@@ -54,10 +54,27 @@ namespace Adbeer.Service.DriverService
             var item = await _userManager.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
             return item;
         }
-        public Task<CreateDriverDto> Create(CreateDriverDto dto)
+        public async Task<int> Create(CreateDriverDto dto)
         {
-            throw new NotImplementedException();
-
+            ApplicationUser _User = new ApplicationUser();
+            var _UserId = _userManager.GetUserId(_contextAccessor.HttpContext.User);
+            _User.Created_At = DateTime.Now;
+            _User.Created_By = _UserId;
+            _User.IsActive = dto.IsActive;
+            _User.IsDeleted = false;
+            _User.Email = dto.Email;
+            _User.UserName = dto.FullName;
+            _User.FullName = dto.FullName;
+            _User.Phone = dto.Phone;
+            _User.BirthDate = dto.BirthDate;
+            _User.UserType = Data.Enums.UserType.Driver;
+            var result = await _userManager.CreateAsync(_User, dto.Password);
+            await _userManager.AddToRoleAsync(_User, "Driver");
+            if (result.Succeeded)
+            {
+                return 1;
+            }
+            return 0;
         }
 
         public Task<int> Delete(string id)

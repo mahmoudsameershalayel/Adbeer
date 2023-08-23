@@ -4,6 +4,7 @@ using Adbeer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Adbeer.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230822093025_changeUserTable")]
+    partial class changeUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -216,13 +219,6 @@ namespace Adbeer.Data.Migrations
                             ConcurrencyStamp = "9a00de05-ab2c-4692-82b2-d33f0f50eb7e",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = "6472ca7d-4acb-4550-9b9f-2d03321ad5e6",
-                            ConcurrencyStamp = "6472ca7d-4acb-4550-9b9f-2d03321ad5e6",
-                            Name = "Driver",
-                            NormalizedName = "DRIVER"
                         });
                 });
 
@@ -467,24 +463,24 @@ namespace Adbeer.Data.Migrations
                         {
                             Id = "f1446937-109c-4e1a-97ce-0560442484f5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e025229a-d666-434e-8037-4ddbeda23207",
+                            ConcurrencyStamp = "f53621fd-a1dd-4ea2-9077-18777cb7b9f2",
                             Email = "Administrator@admin.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMINISTRATOR@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHqWDOFO64lMCrivm36LxDScbxj6mtMSS3VKBNOx6Rjgv1+A+DCOvdHTPMbm/Ej5Rw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEzA8af+gvu9OzZPwYWp5zkdJ8X8EcdQM4VDzoKu70JWgegrFTmuUNke/b4Gntmx6g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a428906b-4e7c-481b-8c0e-b4ee661fc987",
+                            SecurityStamp = "960889e5-d23f-4f97-bd2e-19dc784bcb7e",
                             TwoFactorEnabled = false,
                             UserName = "System_Administrator",
                             BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Created_At = new DateTime(2023, 8, 22, 13, 39, 52, 959, DateTimeKind.Local).AddTicks(9068),
+                            Created_At = new DateTime(2023, 8, 22, 12, 30, 25, 111, DateTimeKind.Local).AddTicks(9101),
                             FullName = "System Administrator",
                             ImageName = "",
                             IsActive = true,
                             IsDeleted = false,
                             Phone = "97259000000",
-                            Updated_at = new DateTime(2023, 8, 22, 13, 39, 52, 959, DateTimeKind.Local).AddTicks(9113),
+                            Updated_at = new DateTime(2023, 8, 22, 12, 30, 25, 111, DateTimeKind.Local).AddTicks(9156),
                             UserType = 0
                         });
                 });

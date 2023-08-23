@@ -1,4 +1,5 @@
-﻿using Adbeer.Service.DriverService;
+﻿using Adbeer.Areas.Admin.Dto.DriverDto;
+using Adbeer.Service.DriverService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Adbeer.Areas.Admin.Controllers
@@ -14,6 +15,21 @@ namespace Adbeer.Areas.Admin.Controllers
         {
             var items = await _driverService.GetAll();
             return View(items);
+        }
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Add(CreateDriverDto dto)
+        {
+            if (ModelState.IsValid)
+            {
+                await _driverService.Create(dto);
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", await _driverService.GetAll()) });
+            }
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "Add", dto) });
         }
     }
 }

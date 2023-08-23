@@ -5,7 +5,7 @@ using System.Data;
 namespace Adbeer.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Route("[area]/[controller]")]
+    [Route("[area]/[controller]/[action]")]
     [Authorize(Roles ="Administrator")]
     public class AdminBaseController : Controller
     {

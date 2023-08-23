@@ -23,10 +23,11 @@ namespace Adbeer.Data
 
             //GUID
             string Admin_Role_Id = "9a00de05-ab2c-4692-82b2-d33f0f50eb7e";
+            string Driver_Role_Id = "6472ca7d-4acb-4550-9b9f-2d03321ad5e6";
             string Admin_User_Id = "f1446937-109c-4e1a-97ce-0560442484f5";
 
 
-            //Add Role
+            //Add Administrator Role
             Builder.Entity<IdentityRole>().HasData(new IdentityRole
             {
                 Id = Admin_Role_Id,
@@ -36,6 +37,14 @@ namespace Adbeer.Data
 
             });
 
+            //Add Driver Role
+            Builder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Id = Driver_Role_Id,
+                Name = "Driver",
+                NormalizedName = "DRIVER",
+                ConcurrencyStamp = Driver_Role_Id
+            });
             //Add Admin User
             var adminUser = new ApplicationUser
             {
