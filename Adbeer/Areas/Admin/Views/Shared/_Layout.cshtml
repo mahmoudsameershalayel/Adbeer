@@ -14,6 +14,7 @@
     <meta content="" name="author" />
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/global/plugins/bootstrap/css/bootstrap-rtl.min.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/global/plugins/bootstrap-switch/css/bootstrap-switch-rtl.min.css" rel="stylesheet" type="text/css" />
@@ -29,7 +30,6 @@
     <link href="~/assets/layouts/layout2/css/layout-rtl.min.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/layouts/layout2/css/themes/blue-rtl.min.css" rel="stylesheet" type="text/css" id="style_color" />
     <link href="~/assets/layouts/layout2/css/custom-rtl.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- END THEME LAYOUT STYLES -->
     <link rel="shortcut icon" href="favicon.ico" />
 
@@ -421,7 +421,7 @@
                 <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
                     <li class="nav-item start ">
                         <a href="javascript:;" class="nav-link nav-toggle">
-                            <i class="fa fa-users" style="color:#ffffff"></i>
+                            <i class="fa fa-users"></i>
                             <span class="title">Drivers</span>
                             <span class="arrow"></span>
                         </a>
@@ -436,27 +436,6 @@
                                 <a asp-area="Admin" asp-controller="Driver" asp-action="Index" class="nav-link ">
                                     <i class="fa fa-list"></i>
                                     <span class="title">All Drivers</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item start ">
-                        <a href="javascript:;" class="nav-link nav-toggle">
-                            <i class="fa fa-car" style="color:#ffffff"></i>
-                            <span class="title">Vehicles</span>
-                            <span class="arrow"></span>
-                        </a>
-                        <ul class="sub-menu">
-                            <li class="nav-item start ">
-                                <a href="index.html" class="nav-link ">
-                                    <i class="fa fa-plus"></i>
-                                    <span class="title">Add New Vehicle</span>
-                                </a>
-                            </li>
-                            <li class="nav-item start ">
-                                <a asp-area="Admin" asp-controller="Vehicle" asp-action="Index" class="nav-link ">
-                                    <i class="fa fa-list"></i>
-                                    <span class="title">All Vehicles</span>
                                 </a>
                             </li>
                         </ul>

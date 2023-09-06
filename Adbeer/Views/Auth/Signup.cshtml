@@ -1,5 +1,4 @@
-﻿@model Adbeer.Dto.RegisterDto.RegisterDto
-@*
+﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -23,7 +22,7 @@
 
 	<div class="wrapper" style="background-color:#FFAD00;">
 			<div class="inner">
-				<form asp-controller="Auth" asp-action="SignUp" method="POST">
+				<form action="">
 				<h3 >Registration Form</h3>
 
 				<!--School name-->
@@ -32,7 +31,7 @@
 							<label for="">School name:</label>
 							<div class="form-holder">
 								<i class="zmdi zmdi-account-o"></i>
-								<input type="text" asp-for="Name" class="form-control">
+								<input type="text" class="form-control">
 							</div>
 						</div>
 
@@ -42,7 +41,7 @@
 							<label for="">ِAdministrator name:</label>
 							<div class="form-holder">
 								<i class="zmdi zmdi-account-o"></i>
-								<input type="text" asp-for="AdministratorName" class="form-control">
+								<input type="text" class="form-control">
 							</div>
 						</div>
 				</div>
@@ -52,8 +51,8 @@
 							<label for="">Address:</label>
 							<div class="form-holder">
 								<i class="zmdi zmdi-account-o"></i>
-								<input type="text" asp-for="Address" class="form-control">
-							</div> 
+								<input type="text" class="form-control">
+							</div>
 						</div>
 						<!--mobile number-->
 						
@@ -61,7 +60,7 @@
 								<label for="">Mobile Number:</label>
 								<div class="form-holder">
 									<i class="zmdi zmdi-account-o"></i>
-									<input type="text" asp-for="MobileNumber" class="form-control">
+									<input type="text" class="form-control">
 								</div>
 							</div>
 				</div>
@@ -70,7 +69,7 @@
 							<div class="form-wrapper">
 								<label for="">Country:</label>
 								<div class="form-holder select">
-									<select asp-for="Country" id="" class="form-control">
+									<select name="" id="" class="form-control">
 										<option value="Palestine">Palestine</option>
 									</select>
 									<i class="zmdi zmdi-pin"></i>
@@ -82,7 +81,7 @@
 								<label for="">City:</label>
 								<div class="form-holder">
 									<i class="zmdi zmdi-account-o"></i>
-									<input type="text" asp-for="City" class="form-control">
+									<input type="text" class="form-control">
 								</div>
 							</div>
 				</div>
@@ -94,7 +93,7 @@
 						<label for="">Email:</label>
 						<div class="form-holder">
 							<i class="zmdi zmdi-account-o"></i>
-							<input type="email" asp-for="Email" class="form-control">
+							<input type="email" class="form-control">
 						</div>
 					</div>
 					<!--Password:-->
@@ -103,7 +102,7 @@
 						<label for="">Password:</label>
 						<div class="form-holder">
 							<i class="zmdi zmdi-account-o"></i>
-							<input type="password" asp-for="Password" class="form-control">
+							<input type="password" class="form-control">
 						</div>
 					</div>
 				</div>
@@ -115,7 +114,7 @@
 						</label>
 					</div>
 					<div class="button-holder">
-						<button type="submit">Register Now</button>
+						<button>Register Now</button>
 					</div>
 				</div>			 		
 			    </form>

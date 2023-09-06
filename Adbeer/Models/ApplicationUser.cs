@@ -7,8 +7,8 @@ namespace Adbeer.Models
     {
         public string FullName { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
-        public UserType UserType { get; set; }
         public Gender? Gender { get; set; }
+        public UserType UserType { get; set; }
         public DateTime BirthDate { get; set; }
         public bool IsActive { get; set; } = true;
         public DateTime Created_At { get; set; } = DateTime.Now;
@@ -17,5 +17,6 @@ namespace Adbeer.Models
         public string? Updated_by { get; set; }
         public bool IsDeleted { get; set; } = false;
         public string ImageName { get; set; }
+        public List<BusStudents> _BusStudents { get; set; }
     }
 }

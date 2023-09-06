@@ -1,11 +1,10 @@
-﻿
-
-using Adbeer.Data.Constrains;
+﻿using Adbeer.Data.Constrains;
 using Adbeer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Metrics;
+using System.Drawing;
+using System.Reflection.Emit;
 
 namespace Adbeer.Data
 {
@@ -17,21 +16,9 @@ namespace Adbeer.Data
         }
         protected override void OnModelCreating(ModelBuilder Builder)
         {
-            Builder.Entity<Bus>()
-                .HasOne(e => e.Driver)
-                .WithOne()
-                .HasConstraintName("test")
-                .OnDelete(DeleteBehavior.Restrict);
-            Builder.Entity<School>()
-                .HasOne(e => e.Administrator)
-                .WithOne()
-                .HasConstraintName("test1")
-                .OnDelete(DeleteBehavior.Restrict);
+            
             //Applay constrains
             Builder.ApplyConfiguration(new BusStudentsConstrains());
-            Builder.ApplyConfiguration(new DriversSchoolConstrains());
-            Builder.ApplyConfiguration(new StudentsSchoolConstrains());
-
 
             //GUID
             string Admin_Role_Id = "9a00de05-ab2c-4692-82b2-d33f0f50eb7e";
@@ -81,29 +68,6 @@ namespace Adbeer.Data
                     UserId = Admin_User_Id
                 }
                 );
-            //Add Admin to Administrator Table
-            var administrator = new Administrator
-            {
-                Id = 8,
-                ApplicationUserId = Admin_User_Id
-            };
-            Builder.Entity<Administrator>().HasData(administrator);
-
-            //Add School To Administrator
-            var school = new School
-            {
-                Id = 8,
-                Name = "AdminSchool",
-                AdministratorName = "System_Administrator",
-                AdministratorId = administrator.Id,
-                Address = "test",
-                MobileNumber = "45626541851",
-                Country = "Palestine",
-                City = "Rafah",
-                Email = "Administrator@admin.com",
-                Password = "123456"
-            };
-            Builder.Entity<School>().HasData(school);
 
             base.OnModelCreating(Builder);
         }
@@ -111,9 +75,6 @@ namespace Adbeer.Data
         public DbSet<BusStudents> BusStudents { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<School> Schools { get; set; }
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Driver> Drivers { get; set; }
-        public DbSet<Administrator> Administrators { get; set; }
 
     }
 }
