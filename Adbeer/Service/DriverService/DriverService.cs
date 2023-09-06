@@ -5,6 +5,7 @@ using Adbeer.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Adbeer.Service.DriverService
 {
@@ -14,7 +15,7 @@ namespace Adbeer.Service.DriverService
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _contextAccessor;
-        public DriverService(ApplicationDbContext context , UserManager<ApplicationUser> userManager , IMapper mapper , IHttpContextAccessor contextAccessor)
+        public DriverService(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IMapper mapper, IHttpContextAccessor contextAccessor)
         {
             _context = context;
             _userManager = userManager;
@@ -23,41 +24,52 @@ namespace Adbeer.Service.DriverService
         }
         public async Task<List<DriverViewModel>> GetAll(string? key)
         {
-            var items = await _userManager.Users.Where(x => x.IsDeleted == false && x.IsActive == true && (string.IsNullOrEmpty(key) || x.FullName.Contains(key)) && x.UserType == Data.Enums.UserType.Driver ).ToListAsync();
+            var _UserId = _userManager.GetUserId(_contextAccessor.HttpContext.User);
+            var school = await _context.Schools.Where(x => x.Administrator.ApplicationUserId.Equals(_UserId)).FirstOrDefaultAsync();
+            var items = await _context.Drivers.Where(x => x.ApplicationUser.IsDeleted == false && x.ApplicationUser.IsActive == true && (string.IsNullOrEmpty(key) || x.ApplicationUser.FullName.Contains(key)) && x.SchoolId == school.Id).Include(x => x.ApplicationUser).ToListAsync();
+
             var itemsVM = _mapper.Map<List<DriverViewModel>>(items);
             return itemsVM;
         }
         public async Task<List<DriverViewModel>> GetAll()
         {
-
-            var items = await _userManager.Users.Where(x => x.IsDeleted == false && x.IsActive == true && x.UserType == Data.Enums.UserType.Driver).ToListAsync();
+            var _UserId = _userManager.GetUserId(_contextAccessor.HttpContext.User);
+            var school = await _context.Schools.Where(x => x.Administrator.ApplicationUserId.Equals(_UserId)).FirstOrDefaultAsync();
+            var items = await _context.Drivers.Where(x => x.ApplicationUser.IsDeleted == false && x.SchoolId == school.Id).Include(x => x.ApplicationUser).ToListAsync();
             var itemsVM = _mapper.Map<List<DriverViewModel>>(items);
             return itemsVM;
         }
 
         public async Task<CreateDriverDto> GetById(string id)
         {
-            var item = await _userManager.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var item = await _context.Drivers.Where(x => x.ApplicationUser.Id == id).Include(x => x.ApplicationUser).FirstOrDefaultAsync();
             var itemVM = _mapper.Map<CreateDriverDto>(item);
             return itemVM;
         }
 
         public async Task<UpdateDriverDto> GetByIdForEdit(string id)
         {
-            var item = await _userManager.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var item = await _context.Drivers.Include(x => x.ApplicationUser).Where(x => x.ApplicationUser.Id == id).FirstOrDefaultAsync();
             var itemVM = _mapper.Map<UpdateDriverDto>(item);
             return itemVM;
         }
 
-        public async Task<ApplicationUser> GetUserById(string id)
+        public async Task<Driver> GetUserById(string id)
         {
-            var item = await _userManager.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var item = await _context.Drivers.Where(x => x.ApplicationUser.Id == id).Include(x => x.ApplicationUser).FirstOrDefaultAsync();
             return item;
         }
-        public async Task<int> Create(CreateDriverDto dto)
+        public async Task<ApplicationUser> Create(CreateDriverDto dto)
         {
+            /* var item = await _context.Drivers.Where(x => x.ApplicationUser.Email.Equals(dto.Email) && x.ApplicationUser.IsDeleted == false).FirstOrDefaultAsync();
+             var item2 = await _userManager.Users.Where(x => x.Email.Equals(dto.Email) && x.IsDeleted == false).FirstOrDefaultAsync();
+             if (item != null || item2 != null)
+             {
+                 return 0;
+             }*/
             ApplicationUser _User = new ApplicationUser();
             var _UserId = _userManager.GetUserId(_contextAccessor.HttpContext.User);
+            var school = await _context.Schools.Where(x => x.Administrator.ApplicationUserId.Equals(_UserId)).FirstOrDefaultAsync();
             _User.Created_At = DateTime.Now;
             _User.Created_By = _UserId;
             _User.IsActive = dto.IsActive;
@@ -68,21 +80,38 @@ namespace Adbeer.Service.DriverService
             _User.Phone = dto.Phone;
             _User.BirthDate = dto.BirthDate;
             _User.UserType = Data.Enums.UserType.Driver;
-            var result = await _userManager.CreateAsync(_User, dto.Password);
+            await _userManager.CreateAsync(_User, dto.Password);
             await _userManager.AddToRoleAsync(_User, "Driver");
-            if (result.Succeeded)
-            {
-                return 1;
-            }
-            return 0;
+            return _User;
         }
-
-        public Task<int> Delete(string id)
+        public async Task<int> CreateDriver(string userId)
         {
-            throw new NotImplementedException();
+            var _UserId = _userManager.GetUserId(_contextAccessor.HttpContext.User);
+            var school = await _context.Schools.Where(x => x.Administrator.ApplicationUserId.Equals(_UserId)).FirstOrDefaultAsync();
+            if (school == null)
+                return 0;
+            var driver = new Driver
+            {
+                ApplicationUserId = userId,
+                SchoolId = school.Id,
+            };
+            await _context.AddAsync(driver);
+            return await _context.SaveChangesAsync();
         }
 
-        
+        public async Task<int> Delete(int id)
+        {
+            var item = await _context.Drivers.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (item == null) return 0;
+            _context.Drivers.Remove(item);
+            await _context.SaveChangesAsync();
+            var item1 = await _userManager.FindByIdAsync(item.ApplicationUserId);
+            if (item1 == null) return 0;
+            await _userManager.DeleteAsync(item1);
+            return 1;
+        }
+
+
 
         public Task<UpdateDriverDto> Update(UpdateDriverDto dto)
         {

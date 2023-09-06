@@ -17,10 +17,36 @@ namespace Adbeer.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.8")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Adbeer.Models.Administrator", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Administrators");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 8,
+                            ApplicationUserId = "f1446937-109c-4e1a-97ce-0560442484f5"
+                        });
+                });
 
             modelBuilder.Entity("Adbeer.Models.Bus", b =>
                 {
@@ -39,9 +65,8 @@ namespace Adbeer.Data.Migrations
                     b.Property<string>("Created_By")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DriverId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DriverId")
+                        .HasColumnType("int");
 
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
@@ -61,15 +86,12 @@ namespace Adbeer.Data.Migrations
                     b.Property<string>("Updated_By")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("_DriverId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("SchoolId");
+                    b.HasIndex("DriverId")
+                        .IsUnique();
 
-                    b.HasIndex("_DriverId");
+                    b.HasIndex("SchoolId");
 
                     b.ToTable("Buses");
                 });
@@ -86,16 +108,72 @@ namespace Adbeer.Data.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("DriverId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StudentId")
+                        .IsRequired()
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BusId");
 
+                    b.HasIndex("DriverId");
+
                     b.HasIndex("StudentId");
 
                     b.ToTable("BusStudents");
+                });
+
+            modelBuilder.Entity("Adbeer.Models.Driver", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("SchoolId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("SchoolId");
+
+                    b.ToTable("Drivers");
+                });
+
+            modelBuilder.Entity("Adbeer.Models.Guardian", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Guardian");
                 });
 
             modelBuilder.Entity("Adbeer.Models.Notification", b =>
@@ -149,10 +227,29 @@ namespace Adbeer.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("AdministratorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AdministratorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("Created_At")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Created_By")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsActive")
@@ -161,11 +258,15 @@ namespace Adbeer.Data.Migrations
                     b.Property<bool?>("IsDelete")
                         .HasColumnType("bit");
 
+                    b.Property<string>("MobileNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -180,7 +281,54 @@ namespace Adbeer.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AdministratorId")
+                        .IsUnique();
+
                     b.ToTable("Schools");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 8,
+                            Address = "test",
+                            AdministratorId = 8,
+                            AdministratorName = "System_Administrator",
+                            City = "Rafah",
+                            Country = "Palestine",
+                            Email = "Administrator@admin.com",
+                            MobileNumber = "45626541851",
+                            Name = "AdminSchool",
+                            Password = "123456"
+                        });
+                });
+
+            modelBuilder.Entity("Adbeer.Models.Student", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("GuardianId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SchoolId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("GuardianId");
+
+                    b.HasIndex("SchoolId");
+
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -446,9 +594,6 @@ namespace Adbeer.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SchoolId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Updated_at")
                         .HasColumnType("datetime2");
 
@@ -458,8 +603,6 @@ namespace Adbeer.Data.Migrations
                     b.Property<int>("UserType")
                         .HasColumnType("int");
 
-                    b.HasIndex("SchoolId");
-
                     b.HasDiscriminator().HasValue("ApplicationUser");
 
                     b.HasData(
@@ -467,43 +610,55 @@ namespace Adbeer.Data.Migrations
                         {
                             Id = "f1446937-109c-4e1a-97ce-0560442484f5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e025229a-d666-434e-8037-4ddbeda23207",
+                            ConcurrencyStamp = "bcff8fe0-453b-47ee-b719-7eea7bc6ce67",
                             Email = "Administrator@admin.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMINISTRATOR@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHqWDOFO64lMCrivm36LxDScbxj6mtMSS3VKBNOx6Rjgv1+A+DCOvdHTPMbm/Ej5Rw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEB3ugvf7cHWVk8y5NFrU7RT93/M0ydmE4uuP4JyRMr64QDAbFih7dW39c+SZJTvCUQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a428906b-4e7c-481b-8c0e-b4ee661fc987",
+                            SecurityStamp = "243a0f15-bf70-40ed-9a25-293628be8862",
                             TwoFactorEnabled = false,
                             UserName = "System_Administrator",
                             BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Created_At = new DateTime(2023, 8, 22, 13, 39, 52, 959, DateTimeKind.Local).AddTicks(9068),
+                            Created_At = new DateTime(2023, 9, 4, 0, 38, 34, 549, DateTimeKind.Local).AddTicks(6863),
                             FullName = "System Administrator",
                             ImageName = "",
                             IsActive = true,
                             IsDeleted = false,
                             Phone = "97259000000",
-                            Updated_at = new DateTime(2023, 8, 22, 13, 39, 52, 959, DateTimeKind.Local).AddTicks(9113),
+                            Updated_at = new DateTime(2023, 9, 4, 0, 38, 34, 549, DateTimeKind.Local).AddTicks(6944),
                             UserType = 0
                         });
                 });
 
+            modelBuilder.Entity("Adbeer.Models.Administrator", b =>
+                {
+                    b.HasOne("Adbeer.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+                });
+
             modelBuilder.Entity("Adbeer.Models.Bus", b =>
                 {
+                    b.HasOne("Adbeer.Models.Driver", "Driver")
+                        .WithOne()
+                        .HasForeignKey("Adbeer.Models.Bus", "DriverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("test");
+
                     b.HasOne("Adbeer.Models.School", "_School")
-                        .WithMany()
+                        .WithMany("_Vehicles")
                         .HasForeignKey("SchoolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Adbeer.Models.ApplicationUser", "_Driver")
-                        .WithMany()
-                        .HasForeignKey("_DriverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("_Driver");
+                    b.Navigation("Driver");
 
                     b.Navigation("_School");
                 });
@@ -516,13 +671,38 @@ namespace Adbeer.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Adbeer.Models.ApplicationUser", "_Stuednt")
+                    b.HasOne("Adbeer.Models.Driver", null)
                         .WithMany("_BusStudents")
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("DriverId");
+
+                    b.HasOne("Adbeer.Models.Student", "_Stuednt")
+                        .WithMany("_BusStudents")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("_Bus");
 
                     b.Navigation("_Stuednt");
+                });
+
+            modelBuilder.Entity("Adbeer.Models.Driver", b =>
+                {
+                    b.HasOne("Adbeer.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Adbeer.Models.School", "_School")
+                        .WithMany("_Drivers")
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("_School");
                 });
 
             modelBuilder.Entity("Adbeer.Models.Notification", b =>
@@ -542,6 +722,45 @@ namespace Adbeer.Data.Migrations
                     b.Navigation("_School");
 
                     b.Navigation("_Sender");
+                });
+
+            modelBuilder.Entity("Adbeer.Models.School", b =>
+                {
+                    b.HasOne("Adbeer.Models.Administrator", "Administrator")
+                        .WithOne()
+                        .HasForeignKey("Adbeer.Models.School", "AdministratorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("test1");
+
+                    b.Navigation("Administrator");
+                });
+
+            modelBuilder.Entity("Adbeer.Models.Student", b =>
+                {
+                    b.HasOne("Adbeer.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Adbeer.Models.Guardian", "Guardian")
+                        .WithMany("Students")
+                        .HasForeignKey("GuardianId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Adbeer.Models.School", "_School")
+                        .WithMany("_Students")
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Guardian");
+
+                    b.Navigation("_School");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -595,24 +814,31 @@ namespace Adbeer.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Adbeer.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("Adbeer.Models.School", null)
-                        .WithMany("_Students")
-                        .HasForeignKey("SchoolId");
-                });
-
             modelBuilder.Entity("Adbeer.Models.Bus", b =>
                 {
                     b.Navigation("_BusStudents");
                 });
 
-            modelBuilder.Entity("Adbeer.Models.School", b =>
+            modelBuilder.Entity("Adbeer.Models.Driver", b =>
                 {
-                    b.Navigation("_Students");
+                    b.Navigation("_BusStudents");
                 });
 
-            modelBuilder.Entity("Adbeer.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Adbeer.Models.Guardian", b =>
+                {
+                    b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("Adbeer.Models.School", b =>
+                {
+                    b.Navigation("_Drivers");
+
+                    b.Navigation("_Students");
+
+                    b.Navigation("_Vehicles");
+                });
+
+            modelBuilder.Entity("Adbeer.Models.Student", b =>
                 {
                     b.Navigation("_BusStudents");
                 });

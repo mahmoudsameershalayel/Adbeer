@@ -26,7 +26,8 @@ namespace Adbeer.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _driverService.Create(dto);
+                var user = await _driverService.Create(dto);
+                await _driverService.CreateDriver(user.Id);
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", await _driverService.GetAll()) });
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "Add", dto) });
