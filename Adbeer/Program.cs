@@ -2,6 +2,7 @@ using Adbeer.AutoMapper;
 using Adbeer.Data;
 using Adbeer.Models;
 using Adbeer.Service.DriverService;
+using Adbeer.Service.VehicleService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,8 +38,14 @@ builder.Services.ConfigureApplicationCookie(Options =>
 );
 
 
+
+
+
+
 builder.Services.AddAutoMapper(typeof(ApplicationProfile).Assembly);
 builder.Services.AddScoped<IDriverService , DriverService>();
+builder.Services.AddScoped<IVehicleService, VehicleService>();
+
 
 
 var app = builder.Build();

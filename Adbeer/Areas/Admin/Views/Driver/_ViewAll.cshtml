@@ -26,9 +26,9 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.FullName</td>
-                        <td>@item.Phone</td>
-                        @if (item.IsActive)
+                        <td>@item.ApplicationUser.FullName</td>
+                        <td>@item.ApplicationUser.Phone</td>
+                        @if (item.ApplicationUser.IsActive)
                         {
                             <td><input type="checkbox" checked></td>
                         }
@@ -36,7 +36,7 @@
                         {
                             <td><input type="checkbox"></td>
                         }
-                        <td>@item.Created_At.ToString("dddd, dd MMMM yyyy")</td>
+                        <td>@item.ApplicationUser.Created_At.ToString("dddd, dd MMMM yyyy")</td>
                         <td>
                             <a class='btn btn-xs btn-info PopUp' onclick="showInPopup('@Url.Action("Edit" , "Driver" ,new{id = item.Id} ,Context.Request.Scheme)' , 'Edit City');"><i class='glyphicon glyphicon-edit'></i></a>
                             <a class="btn btn-xs btn-danger PopUp" onclick="showInPopup('@Url.Action("Delete" , "Driver" ,new{id = item.Id} ,Context.Request.Scheme)' , 'Delete City');"><i class='glyphicon glyphicon-trash'></i></a>
